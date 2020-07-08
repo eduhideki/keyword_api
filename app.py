@@ -11,21 +11,19 @@ CORS(app)
 def get_keywords(theme):
     pytrend = TrendReq()
     pytrend.build_payload(kw_list=[theme])
-    return pytrend.related_queries()[theme]['top']['query'].to_json()
+    return pytrend.related_queries()[theme]['top']['query'].values.tolist()
 
 @app.route('/getmsg/', methods=['GET'])
 def respond():
     theme = request.args.get("theme", None)
     response={}
-
-    # Check if user sent a name at all
+   
     if not theme:
         response["ERROR"] = "Campo Tema vazio"
-    # Now the user entered a valid name
-    else:
-        response = get_keywords(theme)
 
-    # Return the response in json format
+    else:
+        response["RESULTS"] = get_keywords(theme)
+
     return response
 
 # A welcome message to test our server
