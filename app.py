@@ -1,9 +1,12 @@
 # app.py
 from flask import Flask, request, jsonify
+from flask_cors import CORS
+
 import pandas as pd
 from pytrends.request import TrendReq
 import wikipedia
 app = Flask(__name__)
+CORS(app)
 
 def get_keywords(theme):
     pytrend = TrendReq()
